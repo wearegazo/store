@@ -8,7 +8,7 @@ npm install gazo-store --save
 
 ## Use
 ```javascript
-const Store = require('gazo-store')('example-project', 'user-management-service')
+const Store = require('gazo-store')(process.env.GCLOUD_PROJECT, 'user-management-service')
 ```
 
 ### Save data
