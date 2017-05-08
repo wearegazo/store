@@ -1,0 +1,14 @@
+{
+  "name": "gazo-store",
+  "version": "0.1.0",
+  "description": "Data store related functions.",
+  "main": "store.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wearegazo/store.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/datastore": "^1.0.1"
+  }
+}
