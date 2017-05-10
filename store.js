@@ -1,3 +1,4 @@
+const R = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
 module.exports = (options) => {
@@ -15,10 +16,10 @@ module.exports = (options) => {
    * @param {Object} data
    * @return {Promise}
    */
-  const add = (kind, data) => store.save({
+  const add = R.curry((kind, data) => store.save({
     key: generateKey(kind),
     data
-  })
+  }))
 
   /**
    * Find all data of a given kind.
