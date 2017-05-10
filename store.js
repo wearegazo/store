@@ -1,4 +1,3 @@
-const R = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
 module.exports = (options) => {
@@ -27,7 +26,7 @@ module.exports = (options) => {
    * @param {string} kind
    * @return {Promise}
    */
-  const findAll = R.pipe(store.createQuery, store.runQuery)
+  const findAll = (kind) => store.runQuery(store.createQuery(kind))
 
   return {save, findAll}
 }
