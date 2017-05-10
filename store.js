@@ -5,6 +5,7 @@ module.exports = (options) => {
   const store = datastore(options)
 
   const generateKey = (kind) => store.key({
+    namespace: options.namespace,
     path: [kind]
   })
 
