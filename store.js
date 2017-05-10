@@ -1,3 +1,4 @@
+const R = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
 module.exports = (projectId, namespace) => {
@@ -8,10 +9,25 @@ module.exports = (projectId, namespace) => {
     path: [kind]
   })
 
-  const save = (kind, data) => store.save({
-    key: generateKey(kind),
-    data
-  })
+  return {
+    /**
+     * Save data into the store.
+     *
+     * @param {string} kind
+     * @param {Object} data
+     * @return {Promise}
+     */
+    save: (kind, data) => store.save({
+      key: generateKey(kind),
+      data
+    }),
 
-  return {save}
+    /**
+     * Find all data of a given kind.
+     *
+     * @param {string} kind
+     * @return {Promise}
+     */
+    findAll: R.pipe(store.createQuery, store.runQuery)
+  }
 }
