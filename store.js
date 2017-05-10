@@ -9,13 +9,13 @@ module.exports = (options) => {
   })
 
   /**
-   * Save data into the store.
+   * Add data of a given kind to the store.
    *
    * @param {string} kind
    * @param {Object} data
    * @return {Promise}
    */
-  const save = (kind, data) => store.save({
+  const add = (kind, data) => store.save({
     key: generateKey(kind),
     data
   })
@@ -26,7 +26,11 @@ module.exports = (options) => {
    * @param {string} kind
    * @return {Promise}
    */
-  const findAll = (kind) => store.runQuery(store.createQuery(kind))
+  const all = (kind) => {
+    const query = store.createQuery(kind)
+    return store.runQuery(query)
+      .then(data => data[0])
+  }
 
   return {save, findAll}
 }
