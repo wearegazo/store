@@ -22,16 +22,51 @@ module.exports = (options) => {
   }))
 
   /**
+   * Create datastore query.
+   *
+   * @param {string} kind
+   */
+  const createQuery = (kind) => store.createQuery(kind)
+
+  /**
+   * Run datastore query.
+   *
+   * @param {Object} query
+   */
+  const runQuery = (query) => store.runQuery(query)
+
+  /**
    * Find all data of a given kind.
    *
    * @param {string} kind
    * @return {Promise}
    */
-  const findByKind = (kind) => {
-    const query = store.createQuery(kind)
-    return store.runQuery(query)
-      .then(data => data[0])
+  const findAll = (kind) => {
+    const query = createQuery(kind)
+    return runQuery(query)
+      .then(result => result[0])
   }
 
-  return {add, findByKind}
+  /**
+   * Find data by its id.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @return {Promise}
+   */
+  const findById = (kind, id) => {
+    const query = createQuery(kind)
+      .filter('id', '=', id)
+
+    return runQuery(query)
+      .then(result => result[0])
+  }
+
+  return {
+    add,
+    createQuery,
+    runQuery,
+    findAll,
+    findById,
+  }
 }
