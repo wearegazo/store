@@ -22,6 +22,29 @@ module.exports = (options) => {
   }))
 
   /**
+   * Update data in the store.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @return {Promise}
+   */
+  const update = R.curry((kind, data) => store.update({
+    key: key(kind, data.id),
+    data
+  }))
+
+  /**
+   * Remove data from the store.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @return {Promise}
+   */
+  const remove = R.curry((kind, id) => {
+    return store.delete(key(kind, id))
+  })
+
+  /**
    * Create datastore query.
    *
    * @param {string} kind
@@ -58,16 +81,18 @@ module.exports = (options) => {
    * @param {string} id
    * @return {Promise}
    */
-  const findById = (kind, id) => {
+  const find = (kind, id) => {
     return store.get(key(kind, id))
       .then(result => result[0])
   }
 
   return {
     add,
+    update,
+    remove,
+    find,
+    findAll,
     createQuery,
     runQuery,
-    findAll,
-    findById,
   }
 }
