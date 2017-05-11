@@ -4,9 +4,9 @@ const datastore = require('@google-cloud/datastore')
 module.exports = (options) => {
   const store = datastore(options)
 
-  const generateKey = (kind) => store.key({
+  const key = (kind, id) => store.key({
     namespace: options.namespace,
-    path: [kind]
+    path: [kind, id]
   })
 
   /**
@@ -17,7 +17,7 @@ module.exports = (options) => {
    * @return {Promise}
    */
   const add = R.curry((kind, data) => store.save({
-    key: generateKey(kind),
+    key: key(kind, data.id),
     data
   }))
 
@@ -59,10 +59,7 @@ module.exports = (options) => {
    * @return {Promise}
    */
   const findById = (kind, id) => {
-    const query = createQuery(kind)
-      .filter('id', '=', id)
-
-    return runQuery(query)
+    return store.get(key(kind, id))
       .then(result => result[0])
   }
 
