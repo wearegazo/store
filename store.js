@@ -32,8 +32,12 @@ module.exports = (options) => {
    * Run datastore query.
    *
    * @param {Object} query
+   * @return {Promise}
    */
-  const runQuery = (query) => store.runQuery(query)
+  const runQuery = (query) => {
+    return store.runQuery(query)
+      .then(result => result[0])
+  }
 
   /**
    * Find all data of a given kind.
