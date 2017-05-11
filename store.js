@@ -81,10 +81,10 @@ module.exports = (options) => {
    * @param {string} id
    * @return {Promise}
    */
-  const find = (kind, id) => {
+  const find = R.curry((kind, id) => {
     return store.get(key(kind, id))
       .then(result => result[0])
-  }
+  })
 
   return {
     add,

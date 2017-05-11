@@ -1,6 +1,6 @@
 {
   "name": "gazo-store",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Data store related functions.",
   "main": "store.js",
   "repository": {
