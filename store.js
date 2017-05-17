@@ -1,6 +1,12 @@
 const R = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
+/**
+ * Connect to a datastore.
+ *
+ * @param {Object} options
+ * @return {Object}
+ */
 module.exports.connect = (options) => {
   const store = datastore(options)
 
