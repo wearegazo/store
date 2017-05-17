@@ -17,10 +17,10 @@ module.exports.connect = (options) => {
    * @param {string} id
    * @return {Object}
    */
-  const key = (kind, id) => store.key({
+  const key = R.curry((kind, id) => store.key({
     namespace: options.namespace,
     path: [kind, id]
-  })
+  }))
 
   /**
    * Add data to the store.
@@ -55,6 +55,20 @@ module.exports.connect = (options) => {
    */
   const remove = R.curry((kind, id) => {
     return store.delete(key(kind, id))
+  })
+
+  /**
+   * Remove range of data from the store.
+   *
+   * @param {string} kind
+   * @param {string} ids
+   * @return {Promise}
+   */
+  const removeRange = R.curry((kind, ids) => {
+    const makeKey = key(kind)
+    const keys = R.map(makeKey, ids)
+
+    return store.delete(keys)
   })
 
   /**
@@ -103,6 +117,7 @@ module.exports.connect = (options) => {
     add,
     update,
     remove,
+    removeRange,
     find,
     findAll,
     createQuery,
