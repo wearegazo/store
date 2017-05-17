@@ -8,7 +8,8 @@ npm install gazo-store --save
 
 ## Use
 ```javascript
-const store = require('gazo-store').connect(options)
+const gazoStore = require('gazo-store')
+const store = gazoStore.connect(options)
 ```
 
 ### Add data to the store
