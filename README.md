@@ -8,10 +8,20 @@ npm install gazo-store --save
 
 ## Use
 ```javascript
-const Store = require('gazo-store')(options)
+const store = require('gazo-store').connect(options)
 ```
 
-### Save data
+### Add data to the store
 ```javascript
-Store.save('user', {username: 'johndoe'})
+store.add('user', {username: 'johndoe'})
+```
+
+### Find all
+```javascript
+store.findAll('user')
+```
+
+### Find by id
+```javascript
+store.find('user', 'c2ec6c39-1776-49b3-8eff-7ff13818aafc')
 ```
