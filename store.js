@@ -1,9 +1,16 @@
 const R = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
-module.exports = (options) => {
+module.exports.connect = (options) => {
   const store = datastore(options)
 
+  /**
+   * Create datastore key.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @return {Object}
+   */
   const key = (kind, id) => store.key({
     namespace: options.namespace,
     path: [kind, id]
