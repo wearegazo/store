@@ -7,7 +7,7 @@ const datastore = require('@google-cloud/datastore')
  * @param {Object} options
  * @return {Object}
  */
-module.exports.connect = (options) => {
+module.exports.connect = (options = {}) => {
   const store = datastore(options)
 
   /**
@@ -95,11 +95,7 @@ module.exports.connect = (options) => {
    * @param {string} kind
    * @return {Promise}
    */
-  const findAll = (kind) => {
-    const query = createQuery(kind)
-    return runQuery(query)
-      .then(result => result[0])
-  }
+  const findAll = R.pipe(createQuery, runQuery)
 
   /**
    * Find data by its id.
