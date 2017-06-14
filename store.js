@@ -29,7 +29,19 @@ module.exports.connect = (options = {}) => {
    * @param {Object} data
    * @return {Promise}
    */
-  const add = R.curry((kind, data) => store.save({
+  const add = R.curry((kind, data) => store.insert({
+    key: key(kind, data.id),
+    data
+  }))
+
+  /**
+   * Add data to the store, or update if it already exists.
+   *
+   * @param {string} kind
+   * @param {Object} data
+   * @return {Promise}
+   */
+  const addOrUpdate = R.curry((kind, data) => store.upsert({
     key: key(kind, data.id),
     data
   }))
