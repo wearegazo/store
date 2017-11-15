@@ -51,10 +51,11 @@ module.exports.connect = (options = {}) => {
    *
    * @param {string} kind
    * @param {string} id
+   * @param {Object} data
    * @return {Promise}
    */
-  const update = R.curry((kind, data) => store.update({
-    key: key(kind, data.id),
+  const update = R.curry((kind, id, data) => store.update({
+    key: key(kind, id),
     data
   }))
 

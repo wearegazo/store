@@ -1,6 +1,6 @@
 {
   "name": "gazo-store",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Data store related functions.",
   "main": "store.js",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/datastore": "^1.0.1",
-    "ramda": "^0.23.0"
+    "@google-cloud/datastore": "^1.1.0",
+    "ramda": "^0.25.0"
   }
 }
