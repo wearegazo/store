@@ -139,6 +139,17 @@ module.exports.connect = (options = {}) => {
       .then(result => result[0])
   })
 
+  /**
+   * Check if there's data for given id.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @return {Promise}
+   */
+  const exists = _.curry((kind, id) => {
+    return find(kind, id).then(result => !!result)
+  })
+
   return {
     add,
     update,
@@ -148,6 +159,7 @@ module.exports.connect = (options = {}) => {
     removeRange,
     find,
     findAll,
+    exists,
     createQuery,
     runQuery
   }
