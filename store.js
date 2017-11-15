@@ -35,6 +35,19 @@ module.exports.connect = (options = {}) => {
   }))
 
   /**
+   * Update data in the store.
+   *
+   * @param {string} kind
+   * @param {string} id
+   * @param {Object} data
+   * @return {Promise}
+   */
+  const update = _.curry((kind, id, data) => store.update({
+    key: key(kind, id),
+    data
+  }))
+
+  /**
    * Add data to the store, or update if it already exists.
    *
    * @param {string} kind
@@ -47,17 +60,21 @@ module.exports.connect = (options = {}) => {
   }))
 
   /**
-   * Update data in the store.
+   * Add range of data to the store, or update if it already exists.
    *
    * @param {string} kind
-   * @param {string} id
-   * @param {Object} data
+   * @param {Object} datas
    * @return {Promise}
    */
-  const update = _.curry((kind, id, data) => store.update({
-    key: key(kind, id),
-    data
-  }))
+  const addOrUpdateRange = _.curry((kind, datas) => {
+    const makeData = (data) => ({
+      key: key(kind, data.id),
+      data
+    })
+    const data = _.map(makeData, datas)
+
+    return store.upsert(data)
+  })
 
   /**
    * Remove data from the store.
@@ -125,11 +142,13 @@ module.exports.connect = (options = {}) => {
   return {
     add,
     update,
+    addOrUpdate,
+    addOrUpdateRange,
     remove,
     removeRange,
     find,
     findAll,
     createQuery,
-    runQuery,
+    runQuery
   }
 }
