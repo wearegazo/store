@@ -1,4 +1,4 @@
-const R = require('ramda')
+const _ = require('ramda')
 const datastore = require('@google-cloud/datastore')
 
 /**
@@ -17,7 +17,7 @@ module.exports.connect = (options = {}) => {
    * @param {string} id
    * @return {Object}
    */
-  const key = R.curry((kind, id) => store.key({
+  const key = _.curry((kind, id) => store.key({
     namespace: options.namespace,
     path: [kind, id]
   }))
@@ -29,7 +29,7 @@ module.exports.connect = (options = {}) => {
    * @param {Object} data
    * @return {Promise}
    */
-  const add = R.curry((kind, data) => store.insert({
+  const add = _.curry((kind, data) => store.insert({
     key: key(kind, data.id),
     data
   }))
@@ -41,7 +41,7 @@ module.exports.connect = (options = {}) => {
    * @param {Object} data
    * @return {Promise}
    */
-  const addOrUpdate = R.curry((kind, data) => store.upsert({
+  const addOrUpdate = _.curry((kind, data) => store.upsert({
     key: key(kind, data.id),
     data
   }))
@@ -54,7 +54,7 @@ module.exports.connect = (options = {}) => {
    * @param {Object} data
    * @return {Promise}
    */
-  const update = R.curry((kind, id, data) => store.update({
+  const update = _.curry((kind, id, data) => store.update({
     key: key(kind, id),
     data
   }))
@@ -66,7 +66,7 @@ module.exports.connect = (options = {}) => {
    * @param {string} id
    * @return {Promise}
    */
-  const remove = R.curry((kind, id) => {
+  const remove = _.curry((kind, id) => {
     return store.delete(key(kind, id))
   })
 
@@ -77,9 +77,9 @@ module.exports.connect = (options = {}) => {
    * @param {string} ids
    * @return {Promise}
    */
-  const removeRange = R.curry((kind, ids) => {
+  const removeRange = _.curry((kind, ids) => {
     const makeKey = key(kind)
-    const keys = R.map(makeKey, ids)
+    const keys = _.map(makeKey, ids)
 
     return store.delete(keys)
   })
@@ -108,7 +108,7 @@ module.exports.connect = (options = {}) => {
    * @param {string} kind
    * @return {Promise}
    */
-  const findAll = R.pipe(createQuery, runQuery)
+  const findAll = _.pipe(createQuery, runQuery)
 
   /**
    * Find data by its id.
@@ -117,7 +117,7 @@ module.exports.connect = (options = {}) => {
    * @param {string} id
    * @return {Promise}
    */
-  const find = R.curry((kind, id) => {
+  const find = _.curry((kind, id) => {
     return store.get(key(kind, id))
       .then(result => result[0])
   })
